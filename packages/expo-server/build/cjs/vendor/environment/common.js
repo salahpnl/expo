@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createEnvironment = createEnvironment;
 const matchers_1 = require("../../utils/matchers");
+const ImmutableRequest_1 = require("../../ImmutableRequest");
 function initManifestRegExp(manifest) {
     return {
         ...manifest,
@@ -73,7 +74,7 @@ function createEnvironment(input) {
             return undefined;
         }
         const params = (0, matchers_1.parseParams)(request, route);
-        const data = await loaderModule.loader({ params, request });
+        const data = await loaderModule.loader({ params, request: new ImmutableRequest_1.ImmutableRequest(request) });
         return { data: data === undefined ? {} : data };
     }
     return {

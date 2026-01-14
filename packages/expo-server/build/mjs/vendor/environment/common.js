@@ -1,4 +1,5 @@
 import { parseParams } from '../../utils/matchers';
+import { ImmutableRequest } from '../../ImmutableRequest';
 function initManifestRegExp(manifest) {
     return {
         ...manifest,
@@ -70,7 +71,7 @@ export function createEnvironment(input) {
             return undefined;
         }
         const params = parseParams(request, route);
-        const data = await loaderModule.loader({ params, request });
+        const data = await loaderModule.loader({ params, request: new ImmutableRequest(request) });
         return { data: data === undefined ? {} : data };
     }
     return {
